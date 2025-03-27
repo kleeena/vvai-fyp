@@ -1,8 +1,5 @@
 import tensorflow
-import io
 import os, time
-import pickle
-import shutil
 import sys
 import numpy as np
 from PIL import Image
@@ -12,19 +9,35 @@ import torch.nn.functional as F
 import requests
 import torchvision.transforms as transforms
 import torchvision.transforms.functional as TF
-import clip
 from tqdm.notebook import tqdm
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from IPython.display import display
 from einops import rearrange
-from . import CLIP, stylegan
+from  . import clip, stylegan
 import necessary_functions as nf
+
+text_prompt_weight = 1 #@param {type: "number"}
+
+# Fix camera so it's not moving around
+fix_camera = True 
+# Speed at which to try approximating the text. Too fast seems to give strange results. Maximum is 100.
+speed = 20  
+
+steps = 20 
+# Change the seed to generate variations of the same prompt
+seed = 21 
+# We haven't completely understood which parameters influence the generation of this model. Changing the learning rate could help (between 0 and 100)
+learning_rate = 10 
+social = False
+smoothing = (100.0-speed)/100.0
 
 device = torch.device('cuda')
 print('Using device:', device, file=sys.stderr)
 torch.manual_seed(seed)
 clip_model_path = './Trained_Models/TrainedCLIP.pth'
-clip_model = CLIP(clip_model_path)
+clip_model = clip.CLIP(clip_model_path)
+
+
 
 def embed_image(image):
   n = image.shape[0]
@@ -49,20 +62,7 @@ device = stylegan_model.device
 zs = torch.randn([10000, G.mapping.z_dim], device=device)
 w_stds = G.mapping(zs, None).std(0)
 
-text_prompt_weight = 1 #@param {type: "number"}
 
-# Fix camera so it's not moving around
-fix_camera = True 
-# Speed at which to try approximating the text. Too fast seems to give strange results. Maximum is 100.
-speed = 20  
-
-steps = 20 
-# Change the seed to generate variations of the same prompt
-seed = 21 
-# We haven't completely understood which parameters influence the generation of this model. Changing the learning rate could help (between 0 and 100)
-learning_rate = 10 
-social = False
-smoothing = (100.0-speed)/100.0
 
 promptoo="A green v neck shirt"
 target = clip_model.embed_text(promptoo)
