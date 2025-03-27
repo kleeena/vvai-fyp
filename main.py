@@ -13,7 +13,8 @@ from tqdm.notebook import tqdm
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 from IPython.display import display
 from einops import rearrange
-from  . import clip, stylegan
+import clip
+import stylegan
 import necessary_functions as nf
 
 text_prompt_weight = 1 #@param {type: "number"}
