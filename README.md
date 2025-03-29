@@ -1,4 +1,4 @@
-# VVAI - VogueVisionAI for Text to Fashhion Image Generation
+# VVAI - VogueVisionAI for Text to Fashion Image Generation
 
 **VVAI** introduces an innovative way to transform images using Generative AI , which is different from the usual way of picturing clothes. It can generate different visual ideas just from **simple text descriptions**. 
 
