@@ -2,6 +2,7 @@
 
 **VVAI** introduces an innovative way to transform images using Generative AI , which is different from the usual way of picturing clothes. It can generate different visual ideas just from **simple text descriptions**. 
 
+Access the notebook here --> https://colab.research.google.com/drive/1wSRj-I8-LCflmcspWDGt-Zf6X55YnDWT?usp=sharing
  
 ## Project Structure
 
